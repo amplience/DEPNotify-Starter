@@ -54,12 +54,12 @@
 
 # Main heading that will be displayed under the image
 # If this variable is left blank, the generic banner will appear
-  BANNER_TITLE="Welcome to Organization"
+  BANNER_TITLE="Welcome to Amplience"
 
 # Paragraph text that will display under the main heading. For a new line, use \n
 # If this variable is left blank, the generic message will appear. Leave single
 # quotes below as double quotes will break the new lines.
-  MAIN_TEXT='Thanks for choosing a Mac at Organization! We want you to have a few applications and settings configured before you get started with your new Mac. This process should take 10 to 20 minutes to complete. \n \n If you need additional software or help, please visit the Self Service app in your Applications folder or on your Dock.'
+  MAIN_TEXT='The following process should only take 10 to 20 minutes to complete. \n \n The base applications will be installed and necessary configuration settings made. \n \n Please click 'Continue' to start the registration process.'
 
 # Initial Start Status text that shows as things are firing up
   INITAL_START_STATUS="Initial Configuration Starting..."
@@ -108,7 +108,7 @@
 # Help Button Configuration
   # The help button was changed to a popup. Button will appear if title is populated.
     HELP_BUBBLE_TITLE="Need Help?"
-    HELP_BUBBLE_BODY="This tool at Organization is designed to help with new employee onboarding. If you have issues, please give us a call at 123-456-7890"
+    HELP_BUBBLE_BODY="This tool is designed to help with new employee onboarding. If you have issues, please give us a call at +44 " # TODO : set up RingCentral number and huntgroup
 
 #########################################################################################
 # Error Screen Text
@@ -125,7 +125,7 @@
 # Paragraph text that will display under the main heading. For a new line, use \n
 # If this variable is left blank, the generic message will appear. Leave single
 # quotes below as double quotes will break the new lines.
-  ERROR_MAIN_TEXT='We are sorry that you are experiencing this inconvenience with your new Mac. However, we have the nerds to get you back up and running in no time! \n \n Please contact IT right away and we will take a look at your computer ASAP. \n \n Phone: 123-456-7890'
+  ERROR_MAIN_TEXT='We are sorry that you are experiencing this inconvenience with your new Mac. However, we have the nerds to get you back up and running in no time! \n \n Please contact IT right away and we will take a look at your computer ASAP. \n \n Phone: 123-456-7890' # TODO : add correct number
 
 # Error status message that is displayed under the progress bar
   ERROR_STATUS="Setup Failed"
@@ -136,16 +136,15 @@
 # The policy array must be formatted "Progress Bar text,customTrigger". These will be
 # run in order as they appear below.
   POLICY_ARRAY=(
-    "Installing Adobe Creative Cloud,adobeCC"
-    "Installing Adobe Reader,adobeReader"
-    "Installing Chrome,chrome"
-    "Installing CrashPlan,crashplan"
+    "Installing Box Drive,box"
+    "Installing Chromium,chromium"
+    #"Installing CrashPlan,crashplan" # TODO : no custom trigger set in JAMF
+    "Installing CrowdStrike Falcon,csfalcon"
     "Installing Firefox,firefox"
-    "Installing Java,java"
-    "Installing NoMAD,nomad"
-    "Installing Office,msOffice"
-    "Installing Webex,webex"
-    "Installing Critical Updates,updateSoftware"
+    "Installing Slack,slack"
+    # "Installing Zoom,zoom" # TODO : need to set this up
+    # "Installing Office,msOffice" # TODO : we're doing this via VPP can we trigger from here?
+    # "Installing Critical Updates,updateSoftware" # TODO : we need a policy for this.
   )
 
 #########################################################################################
@@ -169,7 +168,7 @@
 # Please note, custom branding is downloaded from Jamf Pro after Self Service has opened
 # at least one time. The script is designed to wait until the files have been downloaded.
 # This could take a few minutes depending on server and network resources.
-  SELF_SERVICE_CUSTOM_BRANDING=false # Set variable to true or false
+  SELF_SERVICE_CUSTOM_BRANDING=true # Set variable to true or false
 
 # If using a name other than Self Service with Custom branding. Change the
 # name with the SELF_SERVICE_APP_NAME variable below. Keep .app on the end
@@ -185,10 +184,10 @@
     EULA_STATUS="Waiting on completion of EULA acceptance"
 
   # EULA button text on the main screen
-    EULA_BUTTON="Read and Agree to EULA"
+    EULA_BUTTON="Read and Agree to the Amplience EULA"
 
   # EULA Screen Title
-    EULA_MAIN_TITLE="Organization End User License Agreement"
+    EULA_MAIN_TITLE="Amplience End User License Agreement"
 
   # EULA Subtitle
     EULA_SUBTITLE="Please agree to the following terms and conditions to start configuration of this Mac"
@@ -202,16 +201,16 @@
 # Registration Variables to Modify
 #########################################################################################
 # Registration window configuration
-  REGISTRATION_ENABLED=false # Set variable to true or false
+  REGISTRATION_ENABLED=true # Set variable to true or false
 
   # Registration window title
-    REGISTRATION_TITLE="Register Mac at Organization"
+    REGISTRATION_TITLE="Please register your Mac"
 
   # Registration status bar text
     REGISTRATION_STATUS="Waiting on completion of computer registration"
 
   # Registration window submit or finish button text
-    REGISTRATION_BUTTON="Register Your Mac"
+    REGISTRATION_BUTTON="Continue"
 
   # The text and pick list sections below will write the following lines out for
   # end users. Use the variables below to configure what the sentence says
@@ -228,7 +227,8 @@
   # First Text Field
   #######################################################################################
     # Text Field Label
-      REG_TEXT_LABEL_1="Computer Name"
+      #REG_TEXT_LABEL_1="Computer Name"
+      REG_TEXT_LABEL_1=""
 
     # Place Holder Text
       REG_TEXT_LABEL_1_PLACEHOLDER="macBook0123"
@@ -263,7 +263,8 @@
   # Second Text Field
   #######################################################################################
     # Text Field Label
-      REG_TEXT_LABEL_2="Asset Tag"
+      #REG_TEXT_LABEL_2="Asset Tag"
+      REG_TEXT_LABEL_2=""
 
     # Place Holder Text
       REG_TEXT_LABEL_2_PLACEHOLDER="81926392"
@@ -297,7 +298,8 @@
   # Popup 1
   #######################################################################################
     # Label for the popup
-      REG_POPUP_LABEL_1="Building"
+      #REG_POPUP_LABEL_1="Building"
+      REG_POPUP_LABEL_1="" # setting to Null should remove from process
 
     # Array of options for the user to select
       REG_POPUP_LABEL_1_OPTIONS=(
@@ -330,9 +332,17 @@
 
     # Array of options for the user to select
       REG_POPUP_LABEL_2_OPTIONS=(
-        "Customer Onboarding"
-        "Professional Services"
-        "Sales Engineering"
+        "Support"
+        "Marketing"
+        "Product"
+        "Management"
+        "Finance"
+        "Customer Success" # TODO : this needs changing to Expert Services - and updating in OneLogin / AD
+        "Sales"
+        "QA"
+        "Operations"
+        "HR"
+        "Engineering"
       )
 
     # Help Bubble for Input. If title left blank, this will not appear

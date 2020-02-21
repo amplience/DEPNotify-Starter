@@ -1,4 +1,11 @@
-# DEPNotify Starter for Jamf Pro
+# Amplience Apple Macbook enrolment
+
+The following is the Amplience Forked version of the DEPNotify scripts.
+The scripts are added to JAMF and provide a mechanism for pre-installing base applications and configuration settings when a new machine is provisioned.
+Apps such as Slack, Firefox, Crashplan backup, Crowdstrike Falcon are automatically installed. Config settings such as MDM, Certs etc are either installed or triggered on completion of enrolment.
+
+
+> DEPNotify Starter for Jamf Pro
 Template bash script to start DEPNotify and run Policies during enrollment with Jamf. App installer, source code, and full product documentation can be found at: https://gitlab.com/Mactroll/DEPNotify
 
 ![](example-img/fullscreen_setup.png)
